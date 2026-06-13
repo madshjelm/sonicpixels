@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SONIC PIXELS — Mads-Bjørn Hjelmar</title>
+  <meta name="description" content="Sonic Pixels — an audio-reactive particle universe. Music, visuals and builds by Mads-Bjørn Hjelmar, Copenhagen." />
+  <meta name="theme-color" content="#070A12" />
+  <meta property="og:title" content="SONIC PIXELS" />
+  <meta property="og:description" content="Sound generates the visuals. An audio-reactive portfolio by Mads-Bjørn Hjelmar." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23070A12'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%238A7BFF'/%3E%3Crect x='9' y='5' width='3' height='3' fill='%235DF2D6'/%3E%3Crect x='5' y='9' width='3' height='3' fill='%23FF5E8A'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%23FFB454'/%3E%3C/svg%3E" />
+</head>
+<body data-state="boot">
+  <canvas id="stage" aria-hidden="true"></canvas>
+
+  <!-- Landing -->
+  <div id="landing" class="landing">
+    <div class="landing-loader" role="status" aria-label="Loading">
+      <div class="landing-loader-bar"><span id="loader-fill"></span></div>
+      <span id="loader-label" class="landing-loader-label">tuning in…</span>
+    </div>
+    <button id="press-play" class="press-play" hidden>
+      <span class="press-play-ring" aria-hidden="true"></span>
+      press play
+    </button>
+  </div>
+
+  <!-- State panels -->
+  <main id="panels">
+    <section id="panel-audio" class="panel panel-audio" aria-label="Audio">
+      <div class="player" id="player">
+        <div class="player-now">
+          <span class="player-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span id="player-title" class="player-title">—</span>
+          <span id="player-time" class="player-time">0:00</span>
+        </div>
+        <div class="player-controls">
+          <button id="player-prev" class="player-btn" aria-label="Previous track">⏮</button>
+          <button id="player-toggle" class="player-btn player-btn-main" aria-label="Pause">⏸</button>
+          <button id="player-next" class="player-btn" aria-label="Next track">⏭</button>
+        </div>
+        <ol id="player-list" class="player-list" aria-label="Tracks"></ol>
+      </div>
+    </section>
+
+    <section id="panel-visual" class="panel panel-visual" aria-label="Visual work">
+      <div id="visual-caption" class="visual-caption" aria-live="polite"></div>
+      <div id="visual-hotspots" class="visual-hotspots"></div>
+    </section>
+
+    <section id="panel-builds" class="panel panel-builds" aria-label="Builds">
+      <div id="builds-cards" class="builds-cards"></div>
+    </section>
+
+    <section id="panel-contact" class="panel panel-contact" aria-label="Contact">
+      <div class="contact-block">
+        <p id="contact-blurb" class="contact-blurb"></p>
+        <a id="contact-email" class="contact-email" href="#"></a>
+        <nav id="contact-links" class="contact-links" aria-label="Social links"></nav>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" hidden>
+    <div class="lightbox-frame">
+      <div id="lightbox-media" class="lightbox-media"></div>
+      <div class="lightbox-meta">
+        <h2 id="lightbox-title" class="lightbox-title"></h2>
+        <p id="lightbox-desc" class="lightbox-desc"></p>
+      </div>
+      <button id="lightbox-close" class="lightbox-close" aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- Tuner -->
+  <nav id="tuner" class="tuner" aria-label="Sections" hidden>
+    <div class="tuner-labels" id="tuner-labels"></div>
+    <div class="tuner-band" id="tuner-band" role="slider" tabindex="0"
+         aria-label="Tuner — use arrow keys to change section"
+         aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-valuetext="AUDIO">
+      <div class="tuner-ticks" aria-hidden="true"></div>
+      <div class="tuner-needle" id="tuner-needle" aria-hidden="true"></div>
+    </div>
+  </nav>
+
+  <!-- No-WebGL / no-JS fallback mount -->
+  <div id="fallback" hidden></div>
+  <noscript>
+    <div class="noscript">
+      <h1>SONIC PIXELS</h1>
+      <p>Music, visuals and builds by Mads-Bjørn Hjelmar, Copenhagen.
+         This site is a WebGL instrument and needs JavaScript to play.</p>
+    </div>
+  </noscript>
+
+  <div id="sr-live" class="visually-hidden" aria-live="polite"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

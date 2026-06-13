@@ -1,0 +1,204 @@
+/* ---------------------------------------------------------------- palette */
+/* Values are written here AND in src/palette.js (single source: palette.js
+   overwrites these at boot; the CSS copies exist so the first paint is right). */
+:root {
+  --void: #070a12;
+  --signal: #8a7bff;
+  --phosphor: #5df2d6;
+  --pulse: #ff5e8a;
+  --solar: #ffb454;
+  --ghost: #b4bdd8;
+
+  --font-display: 'VT323', 'Courier New', monospace;
+  --font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+
+  --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ------------------------------------------------------------------ reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--void);
+  color: var(--ghost);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+}
+
+::selection { background: var(--signal); color: var(--void); }
+
+a { color: var(--phosphor); text-decoration: none; }
+a:hover, a:focus-visible { text-decoration: underline; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--phosphor);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ stage */
+#stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------------------------------------------------------------- landing */
+.landing {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 30;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+}
+
+body[data-state]:not([data-state='boot']):not([data-state='landing']) .landing {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.landing-loader {
+  position: absolute;
+  bottom: 18vh;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  transition: opacity 0.5s ease;
+}
+
+.landing-loader.done { opacity: 0; }
+
+.landing-loader-bar {
+  width: min(280px, 60vw);
+  height: 3px;
+  background: color-mix(in srgb, var(--ghost) 14%, transparent);
+}
+
+.landing-loader-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--signal);
+  box-shadow: 0 0 12px var(--signal);
+  transition: width 0.3s ease;
+}
+
+.landing-loader-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--ghost) 60%, transparent);
+}
+
+.press-play {
+  position: absolute;
+  bottom: 14vh;
+  pointer-events: auto;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3.4vw, 30px);
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--phosphor);
+  padding: 18px 36px;
+  min-height: 56px;
+  opacity: 0;
+  animation: press-play-in 1.4s ease forwards;
+}
+
+.press-play-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--phosphor) 45%, transparent);
+  animation: ring-breathe 3.2s ease-in-out infinite;
+}
+
+.press-play:hover .press-play-ring,
+.press-play:focus-visible .press-play-ring {
+  border-color: var(--phosphor);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--phosphor) 35%, transparent);
+}
+
+@keyframes press-play-in { to { opacity: 1; } }
+
+@keyframes ring-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.045); opacity: 1; }
+}
+
+/* ----------------------------------------------------------------- panels */
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  pointer-events: none;
+}
+
+.panel > * { pointer-events: auto; }
+
+body[data-state='audio'] .panel-audio,
+body[data-state='visual'] .panel-visual,
+body[data-state='builds'] .panel-builds,
+body[data-state='contact'] .panel-contact {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.35s ease 0.4s, transform 0.35s var(--panel-ease) 0.4s, visibility 0s linear 0.4s;
+}
+
+/* ---------------------------------------------------------------- noscript */
+.noscript {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+  background: var(--void);
+  z-index: 100;
+}
+
+.noscript h1 {
+  font-family: var(--font-display);
+  color: var(--signal);
+  letter-spacing: 0.2em;
+}
+
+/* --------------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .press-play-ring { animation: none; }
+  .panel { transition-duration: 0.01s; }
+}

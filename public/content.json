@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "SONIC PIXELS",
+    "artist": "Mads-Bjørn Hjelmar",
+    "tagline": "music · visuals · builds"
+  },
+  "tracks": [
+    { "id": "low-orbit", "title": "Low Orbit", "file": "media/audio/low-orbit.mp3" },
+    { "id": "mid-lattice", "title": "Mid Lattice", "file": "media/audio/mid-lattice.mp3" },
+    { "id": "glass-static", "title": "Glass Static", "file": "media/audio/glass-static.mp3" }
+  ],
+  "visuals": [
+    {
+      "id": "phosphor-lattice",
+      "type": "image",
+      "file": "media/visuals/phosphor-lattice.png",
+      "thumb": "media/visuals/phosphor-lattice.thumb.png",
+      "title": "Phosphor Lattice",
+      "description": "A generative grid study — placeholder. Replace with your own image and describe it here."
+    },
+    {
+      "id": "carrier-wave",
+      "type": "image",
+      "file": "media/visuals/carrier-wave.png",
+      "thumb": "media/visuals/carrier-wave.thumb.png",
+      "title": "Carrier Wave",
+      "description": "Stacked waveforms in periwinkle — placeholder artwork generated in the site palette."
+    },
+    {
+      "id": "dither-bloom",
+      "type": "image",
+      "file": "media/visuals/dither-bloom.png",
+      "thumb": "media/visuals/dither-bloom.thumb.png",
+      "title": "Dither Bloom",
+      "description": "Bayer-dithered radial bloom — placeholder artwork."
+    },
+    {
+      "id": "pulse-topology",
+      "type": "image",
+      "file": "media/visuals/pulse-topology.png",
+      "thumb": "media/visuals/pulse-topology.thumb.png",
+      "title": "Pulse Topology",
+      "description": "Contour lines of a beating field — placeholder artwork."
+    },
+    {
+      "id": "sweep",
+      "type": "video",
+      "file": "media/visuals/sweep.mp4",
+      "thumb": "media/visuals/sweep.thumb.png",
+      "poster": "media/visuals/sweep.thumb.png",
+      "title": "Sweep",
+      "description": "Six seconds of scanline weather — placeholder video to demonstrate in-scene playback."
+    },
+    {
+      "id": "pulse-grid",
+      "type": "video",
+      "file": "media/visuals/pulse-grid.mp4",
+      "thumb": "media/visuals/pulse-grid.thumb.png",
+      "poster": "media/visuals/pulse-grid.thumb.png",
+      "title": "Pulse Grid",
+      "description": "A grid breathing in amber — placeholder video."
+    }
+  ],
+  "builds": [
+    {
+      "id": "sonic-pixels",
+      "title": "Sonic Pixels",
+      "description": "This site — a GPU particle universe driven by whatever is playing.",
+      "tags": ["webgl2", "glsl", "web-audio"],
+      "url": "https://github.com/madshjelm/sonicpixels"
+    },
+    {
+      "id": "tracker-zero",
+      "title": "Tracker Zero",
+      "description": "Browser chiptune tracker with FM voices — placeholder entry.",
+      "tags": ["audio", "synthesis"],
+      "url": "https://example.com/tracker-zero"
+    },
+    {
+      "id": "ledwall",
+      "title": "LED Wall Driver",
+      "description": "Realtime pixel mapper for a 64×32 RGB wall — placeholder entry.",
+      "tags": ["hardware", "esp32"],
+      "url": "https://example.com/ledwall"
+    },
+    {
+      "id": "vj-rig",
+      "title": "VJ Rig",
+      "description": "MIDI-mapped live visuals rig — placeholder entry.",
+      "tags": ["visuals", "midi", "live"],
+      "url": "https://example.com/vj-rig"
+    }
+  ],
+  "contact": {
+    "name": "Mads-Bjørn Hjelmar",
+    "email": "hello@sonicpixels.dk",
+    "blurb": "Copenhagen. Available for scores, installations and odd machines.",
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/madshjelm" },
+      { "label": "Instagram", "url": "https://instagram.com/sonicpixels" },
+      { "label": "Bandcamp", "url": "https://sonicpixels.bandcamp.com" }
+    ]
+  }
+}

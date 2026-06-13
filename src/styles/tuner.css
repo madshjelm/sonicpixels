@@ -1,0 +1,151 @@
+/* The tuner: a synth/radio frequency band fixed to the bottom edge. */
+.tuner {
+  position: fixed;
+  left: 50%;
+  bottom: calc(14px + var(--safe-bottom));
+  transform: translateX(-50%);
+  width: min(680px, calc(100vw - 32px));
+  z-index: 20;
+  user-select: none;
+  -webkit-user-select: none;
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+.tuner[hidden] { display: none; }
+
+.tuner.tuner-entering { opacity: 0; }
+
+/* labels row */
+.tuner-labels {
+  display: flex;
+  position: relative;
+  height: 34px;
+}
+
+.tuner-label {
+  position: absolute;
+  transform: translateX(-50%);
+  top: 0;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2.4vw, 21px);
+  letter-spacing: 0.14em;
+  color: color-mix(in srgb, var(--ghost) 52%, transparent);
+  padding: 6px 10px;
+  min-width: 44px;
+  min-height: 34px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  white-space: nowrap;
+}
+
+.tuner-label:hover { color: var(--ghost); }
+
+.tuner-label[aria-current='true'] {
+  color: var(--phosphor);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--phosphor) 60%, transparent);
+}
+
+/* frequency band */
+.tuner-band {
+  position: relative;
+  height: 44px;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+
+.tuner-band::before {
+  /* the band line */
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ghost) 35%, transparent) 8%,
+    color-mix(in srgb, var(--ghost) 35%, transparent) 92%,
+    transparent
+  );
+}
+
+.tuner-ticks {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ghost) 30%, transparent) 0 1px,
+    transparent 1px calc(100% / 64)
+  );
+  background-size: 100% 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* taller ticks at the four stops, drawn by JS-injected spans */
+.tuner-stop-tick {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  background: color-mix(in srgb, var(--ghost) 55%, transparent);
+}
+
+/* frequency numerals under the band, pure dressing */
+.tuner-freq {
+  position: absolute;
+  top: calc(50% + 12px);
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--ghost) 28%, transparent);
+}
+
+/* the needle */
+.tuner-needle {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 2px;
+  transform: translateX(-50%) translateX(calc(var(--needle-jitter, 0) * 1px));
+  background: linear-gradient(180deg, var(--pulse), var(--solar));
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--solar) 80%, transparent),
+    0 0 26px color-mix(in srgb, var(--solar) 40%, transparent);
+  transition: left 0.65s cubic-bezier(0.22, 1.4, 0.36, 1);
+  will-change: left, transform;
+}
+
+.tuner.dragging .tuner-needle { transition: none; }
+
+.tuner-needle::after {
+  /* hot tip */
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateX(-50%);
+  background: var(--pulse);
+  box-shadow: 0 0 8px var(--pulse);
+}
+
+.tuner-band:focus-visible {
+  outline: 1px solid color-mix(in srgb, var(--phosphor) 70%, transparent);
+  outline-offset: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tuner-needle { transition: left 0.3s ease; }
+}
+
+@media (max-width: 540px) {
+  .tuner { width: calc(100vw - 20px); }
+  .tuner-label { letter-spacing: 0.08em; }
+}
