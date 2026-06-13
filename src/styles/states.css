@@ -1,0 +1,349 @@
+/* ------------------------------------------------------------ AUDIO state */
+.panel-audio {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.player {
+  margin: 0 0 calc(118px + var(--safe-bottom)) 24px;
+  width: min(320px, calc(100vw - 48px));
+  display: grid;
+  gap: 14px;
+}
+
+.player-now {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  letter-spacing: 0.06em;
+  color: var(--ghost);
+}
+
+.player-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.player-time {
+  font-size: 16px;
+  color: color-mix(in srgb, var(--ghost) 55%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* tiny EQ glyph that dances with the music via --eq1..3 set from JS */
+.player-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  align-self: center;
+}
+
+.player-eq i {
+  width: 3px;
+  background: var(--phosphor);
+  height: calc(3px + var(--eq, 0) * 11px);
+}
+
+.player-eq i:nth-child(1) { --eq: var(--eq1, 0.2); }
+.player-eq i:nth-child(2) { --eq: var(--eq2, 0.5); }
+.player-eq i:nth-child(3) { --eq: var(--eq3, 0.3); }
+
+.player-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.player-btn {
+  min-width: 48px;
+  min-height: 44px;
+  font-size: 18px;
+  color: var(--ghost);
+  border: 1px solid color-mix(in srgb, var(--ghost) 25%, transparent);
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.player-btn:hover, .player-btn:focus-visible {
+  color: var(--phosphor);
+  border-color: var(--phosphor);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--phosphor) 25%, transparent);
+}
+
+.player-btn-main { min-width: 64px; }
+
+.player-list {
+  list-style: none;
+  display: grid;
+  gap: 2px;
+}
+
+.player-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--ghost) 70%, transparent);
+  border-left: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.player-track .player-track-index {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: color-mix(in srgb, var(--ghost) 40%, transparent);
+}
+
+.player-track:hover {
+  color: var(--ghost);
+  background: color-mix(in srgb, var(--ghost) 6%, transparent);
+}
+
+.player-track[aria-current='true'] {
+  color: var(--phosphor);
+  border-left-color: var(--phosphor);
+}
+
+/* ----------------------------------------------------------- VISUAL state */
+.visual-caption {
+  position: absolute;
+  left: 50%;
+  bottom: calc(124px + var(--safe-bottom));
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: min(520px, 86vw);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none !important;
+}
+
+.visual-caption.visible { opacity: 1; }
+
+.visual-caption h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ghost);
+}
+
+.visual-caption p {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ghost) 65%, transparent);
+}
+
+/* invisible DOM hotspots mirroring the 3D thumbnail grid (a11y + touch) */
+.visual-hotspots { position: absolute; inset: 0; pointer-events: none !important; }
+
+.visual-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid transparent;
+  transition: border-color 0.25s ease;
+}
+
+.visual-hotspot:hover,
+.visual-hotspot:focus-visible {
+  border-color: color-mix(in srgb, var(--phosphor) 50%, transparent);
+}
+
+.visual-hotspot:focus-visible { outline-offset: 6px; }
+
+/* ----------------------------------------------------------- BUILDS state */
+.builds-cards { position: absolute; inset: 0; pointer-events: none !important; }
+
+.build-card {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: min(280px, 42vw);
+  padding: 14px 16px;
+  pointer-events: auto;
+  background: color-mix(in srgb, var(--void) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--solar) 22%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  display: grid;
+  gap: 6px;
+}
+
+.build-card:hover, .build-card:focus-within {
+  border-color: color-mix(in srgb, var(--solar) 65%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--solar) 14%, transparent);
+}
+
+.build-card h2 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.build-card h2 a { color: var(--ghost); }
+.build-card h2 a:hover, .build-card h2 a:focus-visible { color: var(--solar); text-decoration: none; }
+
+.build-card p {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ghost) 70%, transparent);
+}
+
+.build-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.build-tags li {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--solar) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--solar) 30%, transparent);
+  padding: 1px 7px;
+}
+
+.build-card .build-link {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* stacked list on small screens — cards over the scene's lower half */
+@media (max-width: 720px) {
+  .builds-cards {
+    display: grid;
+    gap: 10px;
+    align-content: end;
+    padding: 0 16px calc(124px + var(--safe-bottom));
+    overflow-y: auto;
+  }
+  .build-card { position: static; transform: none; width: 100%; }
+}
+
+/* ---------------------------------------------------------- CONTACT state */
+.panel-contact { display: grid; place-items: end center; }
+
+.contact-block {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+  margin-bottom: calc(130px + var(--safe-bottom));
+  padding: 0 20px;
+}
+
+.contact-blurb {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--ghost) 60%, transparent);
+  max-width: 420px;
+}
+
+.contact-email {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 4vw, 26px);
+  letter-spacing: 0.08em;
+  color: var(--phosphor);
+  padding: 8px 14px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 18px;
+}
+
+.contact-links a {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ghost) 75%, transparent);
+  padding: 10px 6px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact-links a:hover, .contact-links a:focus-visible { color: var(--phosphor); }
+
+/* --------------------------------------------------------------- lightbox */
+/* the [hidden] guard must win over display:grid, or the invisible overlay
+   keeps intercepting pointer events across the whole viewport */
+.lightbox[hidden] { display: none; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--void) 82%, transparent);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.open { opacity: 1; }
+
+.lightbox-frame {
+  position: relative;
+  max-width: min(1080px, 94vw);
+  max-height: 88vh;
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--signal) 35%, transparent);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgb(0 0 0 / 14%) 3px 4px),
+    color-mix(in srgb, var(--void) 88%, transparent);
+  box-shadow: 0 0 60px color-mix(in srgb, var(--signal) 12%, transparent);
+}
+
+.lightbox-media { display: grid; place-items: center; min-height: 120px; }
+
+.lightbox-media img,
+.lightbox-media video {
+  max-width: 100%;
+  max-height: 64vh;
+  display: block;
+}
+
+.lightbox-meta { display: grid; gap: 4px; }
+
+.lightbox-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ghost);
+}
+
+.lightbox-desc {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--ghost) 70%, transparent);
+  max-width: 64ch;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 18px;
+  color: var(--ghost);
+}
+
+.lightbox-close:hover, .lightbox-close:focus-visible { color: var(--pulse); }

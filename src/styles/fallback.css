@@ -1,0 +1,77 @@
+/* Static no-WebGL fallback: a handsome single-column document with full
+   content access. Same palette and type, none of the machinery. */
+body.fallback-mode { overflow: auto; }
+body.fallback-mode #stage,
+body.fallback-mode #panels,
+body.fallback-mode #tuner,
+body.fallback-mode #landing { display: none; }
+
+#fallback {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+  display: grid;
+  gap: 56px;
+}
+
+#fallback header { display: grid; gap: 8px; }
+
+#fallback h1 {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 9vw, 64px);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: var(--signal);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--signal) 40%, transparent);
+  line-height: 1.05;
+}
+
+#fallback .fallback-tagline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--ghost) 60%, transparent);
+}
+
+#fallback .fallback-note {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ghost) 45%, transparent);
+}
+
+#fallback h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--phosphor);
+  border-bottom: 1px solid color-mix(in srgb, var(--ghost) 18%, transparent);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+#fallback section > ul, #fallback section > ol {
+  list-style: none;
+  display: grid;
+  gap: 24px;
+}
+
+#fallback .fb-track { display: grid; gap: 8px; }
+#fallback .fb-track-title { font-family: var(--font-display); font-size: 19px; letter-spacing: 0.08em; }
+#fallback audio { width: 100%; }
+
+#fallback .fb-visual { display: grid; gap: 8px; }
+#fallback .fb-visual img, #fallback .fb-visual video { width: 100%; display: block; border: 1px solid color-mix(in srgb, var(--ghost) 16%, transparent); }
+#fallback .fb-visual figcaption { display: grid; gap: 2px; }
+#fallback .fb-visual figcaption strong { font-family: var(--font-display); font-size: 17px; font-weight: 400; letter-spacing: 0.08em; color: var(--ghost); }
+#fallback .fb-visual figcaption span { font-size: 13px; color: color-mix(in srgb, var(--ghost) 65%, transparent); }
+
+#fallback .fb-build { display: grid; gap: 6px; padding: 16px; border: 1px solid color-mix(in srgb, var(--solar) 25%, transparent); }
+#fallback .fb-build h3 { font-family: var(--font-display); font-size: 19px; font-weight: 400; letter-spacing: 0.08em; }
+#fallback .fb-build h3 a { color: var(--ghost); }
+#fallback .fb-build h3 a:hover { color: var(--solar); }
+#fallback .fb-build p { font-size: 14px; color: color-mix(in srgb, var(--ghost) 70%, transparent); }
+#fallback .fb-build .build-tags { margin-top: 4px; }
+
+#fallback .fb-contact { display: grid; gap: 12px; justify-items: start; }
+#fallback .fb-contact .contact-email { padding-left: 0; }
+#fallback .fb-contact .contact-links { justify-content: flex-start; }
